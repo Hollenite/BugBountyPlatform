@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { buttonStyle, cardStyle, inputStyle } from "./styles"
 
 type Props = {
   sessionId: string
@@ -25,6 +24,7 @@ export function SubmissionForm({ sessionId, researcherId, onSubmitted }: Props) 
       stepsToRepro: String(formData.get("stepsToRepro") ?? ""),
       expectedBehavior: String(formData.get("expectedBehavior") ?? ""),
       actualBehavior: String(formData.get("actualBehavior") ?? ""),
+      researcherWallet: String(formData.get("researcherWallet") ?? ""),
     }
 
     const res = await fetch("/api/submissions", {
@@ -45,17 +45,50 @@ export function SubmissionForm({ sessionId, researcherId, onSubmitted }: Props) 
   }
 
   return (
-    <form action={handleSubmit} style={{ ...cardStyle, display: "grid", gap: 10 }}>
-      <h3 style={{ margin: 0 }}>Submit finding</h3>
-      <input name="title" placeholder="Title" style={inputStyle} required />
-      <textarea name="description" placeholder="Description" style={{ ...inputStyle, minHeight: 90 }} required />
-      <textarea name="stepsToRepro" placeholder="Steps to reproduce" style={{ ...inputStyle, minHeight: 90 }} required />
-      <textarea name="expectedBehavior" placeholder="Expected behavior" style={{ ...inputStyle, minHeight: 70 }} required />
-      <textarea name="actualBehavior" placeholder="Actual behavior" style={{ ...inputStyle, minHeight: 70 }} required />
-      <button type="submit" style={buttonStyle} disabled={submitting}>
-        {submitting ? "Submitting..." : "Create submission"}
+    <form action={handleSubmit} className="surface-card form-grid">
+      <div className="stack" style={{ gap: 8 }}>
+        <h3>Escalate to verifier</h3>
+        <p className="muted" style={{ margin: 0 }}>
+          Turn the captured unsafe execution into a judge-ready report with clean reproduction steps and expected vs actual behavior.
+        </p>
+      </div>
+
+      <div className="form-grid form-grid--two">
+        <div className="field">
+          <label htmlFor="title">Finding title</label>
+          <input id="title" name="title" className="input" placeholder="Refund agent exceeds policy cap after approval output" required />
+        </div>
+        <div className="field">
+          <label htmlFor="researcherWallet">Researcher wallet (optional)</label>
+          <input id="researcherWallet" name="researcherWallet" className="input" placeholder="0x..." />
+        </div>
+      </div>
+
+      <div className="field">
+        <label htmlFor="description">Impact summary</label>
+        <textarea id="description" name="description" className="textarea" placeholder="Explain the unsafe agent-tool execution clearly and crisply." required />
+      </div>
+
+      <div className="field">
+        <label htmlFor="stepsToRepro">Reproduction by rerun</label>
+        <textarea id="stepsToRepro" name="stepsToRepro" className="textarea" placeholder="List the exact exploit prompt and sequence needed to reproduce the behavior." required />
+      </div>
+
+      <div className="form-grid form-grid--two">
+        <div className="field">
+          <label htmlFor="expectedBehavior">Expected behavior</label>
+          <textarea id="expectedBehavior" name="expectedBehavior" className="textarea" placeholder="The agent should refuse unsafe execution above policy limits." required />
+        </div>
+        <div className="field">
+          <label htmlFor="actualBehavior">Actual behavior</label>
+          <textarea id="actualBehavior" name="actualBehavior" className="textarea" placeholder="The agent issues the unsafe tool action after approval output." required />
+        </div>
+      </div>
+
+      <button type="submit" className="button button--primary" disabled={submitting}>
+        {submitting ? "Submitting finding…" : "Create verifier submission"}
       </button>
-      {error ? <p style={{ color: "#fca5a5", margin: 0 }}>{error}</p> : null}
+      {error ? <div className="notice notice--danger"><p>{error}</p></div> : null}
     </form>
   )
 }
