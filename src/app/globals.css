@@ -669,6 +669,177 @@ pre, code, .mono { font-family: "JetBrains Mono", "SFMono-Regular", ui-monospace
   color: var(--success);
 }
 
+.lab-section-card {
+  gap: 16px;
+}
+
+.lab-section-card__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.lab-section-card__description {
+  margin: 8px 0 0;
+  line-height: 1.65;
+}
+
+.lab-blueprint-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.lab-info-block {
+  display: grid;
+  gap: 10px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--panel-alt);
+  padding: 16px;
+}
+
+.attack-ideas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.attack-idea {
+  display: grid;
+  gap: 6px;
+  text-align: left;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  background: #fff;
+  color: var(--text);
+  cursor: pointer;
+  transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+}
+
+.attack-idea:hover {
+  border-color: #bfdbfe;
+  background: var(--accent-soft);
+}
+
+.attack-idea--active {
+  border-color: #93c5fd;
+  background: var(--accent-soft);
+  box-shadow: inset 0 0 0 1px #bfdbfe;
+}
+
+.attack-idea__label {
+  font-weight: 700;
+}
+
+.attack-idea__meta {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.lab-prompt-editor {
+  min-height: 140px;
+}
+
+.lab-safe-behavior-card {
+  border-style: dashed;
+}
+
+.summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.summary-item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--panel-alt);
+  padding: 14px;
+  display: grid;
+  gap: 6px;
+}
+
+.summary-item__label {
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.summary-item__value {
+  font-size: 1rem;
+}
+
+.monitor-list,
+.policy-monitor-list {
+  display: grid;
+  gap: 10px;
+}
+
+.monitor-row,
+.policy-monitor-item {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--panel-alt);
+  padding: 14px;
+  display: grid;
+  gap: 10px;
+}
+
+.monitor-row__header,
+.policy-monitor-item__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.monitor-row__status {
+  color: var(--muted);
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+
+.monitor-row__body {
+  display: grid;
+  gap: 10px;
+}
+
+.monitor-row__label {
+  display: block;
+  color: var(--muted);
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 4px;
+}
+
+.monitor-row__body p,
+.policy-monitor-item p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.policy-monitor-item--pass {
+  border-color: #bbf7d0;
+  background: var(--success-soft);
+}
+
+.policy-monitor-item--fail {
+  border-color: #fecaca;
+  background: var(--danger-soft);
+}
+
+.policy-monitor-item--pending {
+  border-color: #fde68a;
+  background: var(--warning-soft);
+}
+
 .sign-in-panel {
   display: grid;
   gap: 18px;
@@ -678,6 +849,369 @@ pre, code, .mono { font-family: "JetBrains Mono", "SFMono-Regular", ui-monospace
 .role-button-grid {
   display: grid;
   gap: 10px;
+}
+
+@media (max-width: 1080px) {
+  .hero-grid,
+  .hero-proof-strip,
+  .metric-grid,
+  .metrics-row,
+  .card-grid,
+  .role-grid,
+  .steps-grid,
+  .detail-grid,
+  .split-layout,
+  .review-grid,
+  .spec-grid,
+  .form-grid--two,
+  .lab-blueprint-grid,
+  .attack-ideas-grid,
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-section-card__header,
+  .monitor-row__header,
+  .policy-monitor-item__header {
+    align-items: flex-start;
+  }
+
+  .monitor-row__body {
+    grid-template-columns: 1fr;
+  }
+
+  .monitor-row__status {
+    justify-self: start;
+  }
+
+  .attack-idea {
+    min-height: auto;
+  }
+
+  .summary-item {
+    min-height: auto;
+  }
+
+  .monitor-row,
+  .policy-monitor-item {
+    padding: 12px;
+  }
+
+  .monitor-row__body {
+    gap: 8px;
+  }
+
+  .monitor-row__label {
+    margin-bottom: 2px;
+  }
+
+  .monitor-row__body p,
+  .policy-monitor-item p {
+    font-size: 0.95rem;
+  }
+
+  .lab-safe-behavior-card {
+    padding: 18px;
+  }
+
+  .attack-ideas-grid {
+    gap: 8px;
+  }
+
+  .summary-grid {
+    gap: 10px;
+  }
+
+  .lab-blueprint-grid {
+    gap: 12px;
+  }
+
+  .lab-info-block {
+    padding: 14px;
+  }
+
+  .monitor-list,
+  .policy-monitor-list {
+    gap: 8px;
+  }
+
+  .attack-idea__meta {
+    line-height: 1.5;
+  }
+
+  .lab-prompt-editor {
+    min-height: 130px;
+  }
+
+  .lab-section-card {
+    gap: 14px;
+  }
+
+  .lab-section-card__description {
+    max-width: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .lab-blueprint-grid,
+  .attack-ideas-grid,
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .monitor-row__body {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-section-card__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .attack-idea {
+    width: 100%;
+  }
+
+  .summary-item {
+    width: 100%;
+  }
+
+  .lab-blueprint-grid {
+    gap: 10px;
+  }
+
+  .summary-grid {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 760px) {
+  .lab-section-card__header,
+  .monitor-row__header,
+  .policy-monitor-item__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .attack-idea {
+    padding: 12px;
+  }
+
+  .summary-item,
+  .lab-info-block {
+    padding: 12px;
+  }
+
+  .lab-prompt-editor {
+    min-height: 120px;
+  }
+
+  .attack-idea__label {
+    font-size: 0.95rem;
+  }
+
+  .summary-item__value {
+    font-size: 0.95rem;
+  }
+
+  .monitor-row__status {
+    font-size: 0.85rem;
+  }
+
+  .monitor-row__label {
+    font-size: 0.78rem;
+  }
+
+  .lab-section-card__description {
+    font-size: 0.95rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 1080px) {
+  .hero-grid,
+  .hero-proof-strip,
+  .metric-grid,
+  .metrics-row,
+  .card-grid,
+  .role-grid,
+  .steps-grid,
+  .detail-grid,
+  .split-layout,
+  .review-grid,
+  .spec-grid,
+  .form-grid--two {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-blueprint-grid,
+  .attack-ideas-grid,
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-section-card__header,
+  .monitor-row__header,
+  .policy-monitor-item__header {
+    align-items: flex-start;
+  }
+
+  .monitor-row__body {
+    grid-template-columns: 1fr;
+  }
+
+  .monitor-row__status {
+    justify-self: start;
+  }
+
+  .attack-idea {
+    min-height: auto;
+  }
+
+  .summary-item {
+    min-height: auto;
+  }
+
+  .monitor-row,
+  .policy-monitor-item {
+    padding: 12px;
+  }
+
+  .monitor-row__body {
+    gap: 8px;
+  }
+
+  .monitor-row__label {
+    margin-bottom: 2px;
+  }
+
+  .monitor-row__body p,
+  .policy-monitor-item p {
+    font-size: 0.95rem;
+  }
+
+  .lab-safe-behavior-card {
+    padding: 18px;
+  }
+
+  .attack-ideas-grid {
+    gap: 8px;
+  }
+
+  .summary-grid {
+    gap: 10px;
+  }
+
+  .lab-blueprint-grid {
+    gap: 12px;
+  }
+
+  .lab-info-block {
+    padding: 14px;
+  }
+
+  .monitor-list,
+  .policy-monitor-list {
+    gap: 8px;
+  }
+
+  .attack-idea__meta {
+    line-height: 1.5;
+  }
+
+  .lab-prompt-editor {
+    min-height: 130px;
+  }
+
+  .lab-section-card {
+    gap: 14px;
+  }
+
+  .lab-section-card__description {
+    max-width: none;
+  }
+}
+
+@media (max-width: 860px) {
+  .lab-blueprint-grid,
+  .attack-ideas-grid,
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .monitor-row__body {
+    grid-template-columns: 1fr;
+  }
+
+  .lab-section-card__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .attack-idea {
+    width: 100%;
+  }
+
+  .summary-item {
+    width: 100%;
+  }
+
+  .lab-blueprint-grid {
+    gap: 10px;
+  }
+
+  .summary-grid {
+    gap: 8px;
+  }
+}
+
+@media (max-width: 760px) {
+  .lab-section-card__header,
+  .monitor-row__header,
+  .policy-monitor-item__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .attack-idea {
+    padding: 12px;
+  }
+
+  .summary-item,
+  .lab-info-block {
+    padding: 12px;
+  }
+
+  .lab-prompt-editor {
+    min-height: 120px;
+  }
+
+  .attack-idea__label {
+    font-size: 0.95rem;
+  }
+
+  .summary-item__value {
+    font-size: 0.95rem;
+  }
+
+  .monitor-row__status {
+    font-size: 0.85rem;
+  }
+
+  .monitor-row__label {
+    font-size: 0.78rem;
+  }
+
+  .lab-section-card__description {
+    font-size: 0.95rem;
+  }
+
+  .summary-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 1080px) {

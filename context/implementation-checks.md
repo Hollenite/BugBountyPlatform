@@ -1,7 +1,7 @@
 # Implementation Checks
 
 ## Current Goal
-- Completed polished hackathon UI upgrade and final verification.
+- Completed lab redesign and final verification.
 
 ## Done
 - Created `context/` and moved both planning docs into it.
@@ -11,21 +11,26 @@
 - Implemented schema, hashing, validation, session manager, deterministic refund agent, replay engine, seed script, core API routes, and minimal UI pages.
 - Applied required backend fixes: non-UUID `programId` support, hard tool-loop cap, deterministic exploit path, explicit refund policy, rerun-based replay, persisted replay detail/comparison, atomic submission/session updates, and off-chain/on-chain separation.
 - Proved terminal loop end-to-end.
-- Rebuilt the UI into a polished, production-grade hackathon demo:
-  - branded app shell and global theme
-  - upgraded home page and board
-  - flagship sandbox lab experience
-  - improved trace viewer and submission UX
-  - upgraded verifier queue and verifier review flow
-  - advanced details hidden by default
-  - removed server-page localhost self-fetching
-- Added non-interactive ESLint support and compatible lint dependencies.
-- Passed final verification:
+- Rebuilt the app into a professional AI-agent security review platform with canonical routes.
+- Fixed startup script env bootstrapping after pull issues.
+- Redesigned the Test Lab into a real bug bounty sandbox:
+  - Agent Blueprint
+  - Attack Console with guided templates + custom prompt path
+  - explicit Open sandbox session / Send to agent flow
+  - Tool Monitor
+  - Policy Monitor
+  - Evidence Summary
+  - Evidence Timeline with collapsed raw JSON
+  - Finding Composer with evidence-derived prefills
+  - raw IDs hidden in Advanced
+- Passed final lab verification:
   - `npm run lint`
   - `npx tsc --noEmit`
   - `npm run build`
-  - no hardcoded localhost self-fetches in pages
-  - polished rendered pages verified
+  - canonical lab UI sections rendered
+  - opening a sandbox session does not auto-run the exploit
+  - explicit send triggers confirmed violation path
+  - auth and invalid-input adversarial probes rejected correctly
 
 ## In Progress
 - None.
@@ -34,4 +39,4 @@
 - None currently blocking the hackathon demo.
 
 ## Next
-- If desired: add screenshots/demo script, optional tests around UI states, or continue to optional blockchain presentation work.
+- If desired: tighten some copy, add screenshots/demo script, or prepare a clean commit.
