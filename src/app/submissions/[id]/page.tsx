@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { redirect } from "next/navigation"
+import { ChainRecordButton } from "@/components/ChainRecordButton"
 import { TraceViewer } from "@/components/TraceViewer"
 import { VerifierActions } from "@/components/VerifierActions"
 import { AdvancedSection, EmptyState, PageHeader, Pill, SecondaryLink, StatusBadge, SurfaceCard } from "@/components/ui"
@@ -155,6 +156,17 @@ export default async function SubmissionDetailPage({ params }: { params: { id: s
           </SurfaceCard>
 
           <VerifierActions submissionId={submission.id} currentStatus={submission.status} replayResult={submission.replayResult} />
+          <ChainRecordButton
+            submissionId={submission.id}
+            status={submission.status}
+            replayResult={submission.replayResult}
+            chainProgramIndex={program.chainProgramIndex}
+            chainFindingId={submission.chainFindingId}
+            submitFindingTx={submission.submitFindingTx}
+            reportHash={submission.reportHash}
+            evidenceHash={submission.evidenceHash}
+            researcherWallet={submission.researcherWallet ?? researcher.wallet}
+          />
         </aside>
       </section>
     </main>
