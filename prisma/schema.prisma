@@ -8,16 +8,34 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  name      String
-  role      String
-  wallet    String?
-  createdAt DateTime @default(now())
+  id                   String    @id @default(uuid())
+  email                String    @unique
+  emailVerifiedAt      DateTime?
+  name                 String
+  role                 String
+  wallet               String?
+  walletVerifiedAt     DateTime?
+  walletNonce          String?
+  walletNonceExpiresAt DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @default(now()) @updatedAt
 
   programs    Program[]
   submissions Submission[]
   sessions    AgentSession[]
+  appSessions AppSession[]
+}
+
+model AppSession {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
 }
 
 model Program {
@@ -28,6 +46,11 @@ model Program {
   agentId           String
   description       String
   scope             String
+  targetTemplateId  String   @default("refund-agent")
+  visibility        String   @default("private")
+  scopeConfig       String?
+  policyConfig      String?
+  rewardConfig      String?
   rewardCriticalWei String   @default("50000000000000000")
   rewardHighWei     String   @default("20000000000000000")
   rewardMediumWei   String   @default("10000000000000000")
@@ -37,9 +60,14 @@ model Program {
   escrowTx          String?
   poolBalanceWei    String   @default("0")
   createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now()) @updatedAt
 
   submissions Submission[]
   sessions    AgentSession[]
+
+  @@index([companyId])
+  @@index([targetTemplateId])
+  @@index([visibility, active])
 }
 
 model AgentSession {

@@ -1,0 +1,65 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "FailBounty" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e9]: FailBounty
+        - navigation "Primary" [ref=e10]:
+          - link "Home" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+            - generic [ref=e15]: Home
+          - link "Programs" [ref=e16] [cursor=pointer]:
+            - /url: /programs
+            - img [ref=e17]
+            - generic [ref=e22]: Programs
+          - link "Test Lab" [ref=e23] [cursor=pointer]:
+            - /url: /lab/prog-refund-demo
+            - img [ref=e24]
+            - generic [ref=e26]: Test Lab
+          - link "Verifier Review" [ref=e27] [cursor=pointer]:
+            - /url: /submissions
+            - img [ref=e28]
+            - generic [ref=e32]: Verifier Review
+          - link "Account" [ref=e33] [cursor=pointer]:
+            - /url: /account
+            - img [ref=e34]
+            - generic [ref=e37]: Account
+        - link "Sign in" [ref=e38] [cursor=pointer]:
+          - /url: /sign-in
+          - img [ref=e39]
+          - text: Sign in
+    - main [ref=e57]:
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - heading "Programs" [level=1] [ref=e60]
+          - paragraph [ref=e61]: Programs are hosted AI-agent workflows that researchers can test.
+        - link "Start with demo program" [ref=e63] [cursor=pointer]:
+          - /url: /lab/prog-refund-demo
+          - text: Start with demo program
+          - img [ref=e64]
+      - generic [ref=e67]:
+        - generic [ref=e68]:
+          - generic [ref=e69]:
+            - generic [ref=e70]: Acme AI
+            - generic [ref=e71]: deterministic simulator
+            - generic [ref=e72]: Active
+          - generic [ref=e73]:
+            - heading "AcmeCare RefundOps Agent" [level=2] [ref=e74]
+            - paragraph [ref=e75]: A customer-support refund workflow where unsafe tool execution can happen when approval output is treated like direct authorization.
+          - generic [ref=e76]:
+            - generic [ref=e77]:
+              - img [ref=e78]
+              - text: lookup_order, request_human_approval, issue_refund
+            - generic [ref=e80]: overspend
+            - generic [ref=e81]: approval confusion
+        - generic [ref=e82]:
+          - generic [ref=e83]: What can be tested
+          - strong [ref=e84]: High-impact tool execution
+          - link "Open" [ref=e85] [cursor=pointer]:
+            - /url: /programs/prog-refund-demo
+            - text: Open
+            - img [ref=e86]
+  - alert [ref=e56]

@@ -1,0 +1,69 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "FailBounty" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e9]: FailBounty
+        - navigation "Primary" [ref=e10]:
+          - link "Home" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+            - generic [ref=e15]: Home
+          - link "Programs" [ref=e16] [cursor=pointer]:
+            - /url: /programs
+            - img [ref=e17]
+            - generic [ref=e22]: Programs
+          - link "Test Lab" [ref=e23] [cursor=pointer]:
+            - /url: /lab/prog-refund-demo
+            - img [ref=e24]
+            - generic [ref=e26]: Test Lab
+          - link "Verifier Review" [ref=e27] [cursor=pointer]:
+            - /url: /submissions
+            - img [ref=e28]
+            - generic [ref=e32]: Verifier Review
+          - link "Account" [ref=e33] [cursor=pointer]:
+            - /url: /account
+            - img [ref=e34]
+            - generic [ref=e37]: Account
+        - link "Sign in" [ref=e38] [cursor=pointer]:
+          - /url: /sign-in
+          - img [ref=e39]
+          - text: Sign in
+    - main [ref=e57]:
+      - generic [ref=e58]:
+        - generic [ref=e59]:
+          - heading "Create hosted sandbox" [level=1] [ref=e60]
+          - paragraph [ref=e61]: Create a private program from the approved refund approval sandbox template.
+        - link "Back to programs" [ref=e63] [cursor=pointer]:
+          - /url: /programs
+      - generic [ref=e64]:
+        - generic [ref=e65]:
+          - heading "Program basics" [level=3] [ref=e66]
+          - paragraph [ref=e67]: External targets are not supported in private alpha.
+        - generic "Program creation steps" [ref=e68]:
+          - generic [ref=e69]: 1. Program basics
+          - generic [ref=e70]: 2. Template
+          - generic [ref=e71]: 3. Scope
+          - generic [ref=e72]: 4. Publish
+        - generic [ref=e73]:
+          - generic [ref=e74]:
+            - generic [ref=e75]: Program name
+            - textbox "Program name" [ref=e76]: Acme Refund Agent Alpha
+          - generic [ref=e77]:
+            - generic [ref=e78]: Optional slug
+            - textbox "Optional slug" [ref=e79]:
+              - /placeholder: acme-refund-alpha
+        - generic [ref=e80]:
+          - generic [ref=e81]: Description
+          - textbox "Description" [ref=e82]: A hosted refund-agent sandbox for testing approval confusion and over-limit unsafe tool execution.
+        - generic [ref=e83]:
+          - paragraph [ref=e85]:
+            - strong [ref=e86]: "Template:"
+            - text: Refund approval sandbox. This template is selected and locked for v1.
+          - paragraph [ref=e88]:
+            - strong [ref=e89]: "Scope:"
+            - text: Private visibility with overspend and approval confusion findings enabled.
+        - button "Create program" [ref=e90] [cursor=pointer]
+  - alert [ref=e56]

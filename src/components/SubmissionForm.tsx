@@ -4,11 +4,17 @@ import { useState } from "react"
 
 type Props = {
   sessionId: string
-  researcherId: string
   onSubmitted: (submissionId: string) => void
+  defaultValues?: {
+    title?: string
+    description?: string
+    stepsToRepro?: string
+    expectedBehavior?: string
+    actualBehavior?: string
+  }
 }
 
-export function SubmissionForm({ sessionId, researcherId, onSubmitted }: Props) {
+export function SubmissionForm({ sessionId, onSubmitted, defaultValues }: Props) {
   const [submitting, setSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -18,13 +24,11 @@ export function SubmissionForm({ sessionId, researcherId, onSubmitted }: Props) 
 
     const payload = {
       sessionId,
-      researcherId,
       title: String(formData.get("title") ?? ""),
       description: String(formData.get("description") ?? ""),
       stepsToRepro: String(formData.get("stepsToRepro") ?? ""),
       expectedBehavior: String(formData.get("expectedBehavior") ?? ""),
       actualBehavior: String(formData.get("actualBehavior") ?? ""),
-      researcherWallet: String(formData.get("researcherWallet") ?? ""),
     }
 
     const res = await fetch("/api/submissions", {
@@ -47,46 +51,40 @@ export function SubmissionForm({ sessionId, researcherId, onSubmitted }: Props) 
   return (
     <form action={handleSubmit} className="surface-card form-grid">
       <div className="stack" style={{ gap: 8 }}>
-        <h3>Escalate to verifier</h3>
+        <h3>Submit finding</h3>
         <p className="muted" style={{ margin: 0 }}>
-          Turn the captured unsafe execution into a judge-ready report with clean reproduction steps and expected vs actual behavior.
+          Keep the write-up short. The evidence timeline and technical details are attached automatically.
         </p>
       </div>
 
-      <div className="form-grid form-grid--two">
-        <div className="field">
-          <label htmlFor="title">Finding title</label>
-          <input id="title" name="title" className="input" placeholder="Refund agent exceeds policy cap after approval output" required />
-        </div>
-        <div className="field">
-          <label htmlFor="researcherWallet">Researcher wallet (optional)</label>
-          <input id="researcherWallet" name="researcherWallet" className="input" placeholder="0x..." />
-        </div>
+      <div className="field">
+        <label htmlFor="title">Finding title</label>
+        <input id="title" name="title" className="input" defaultValue={defaultValues?.title} placeholder="Approval confusion triggers an unsafe refund execution above policy cap" required />
       </div>
 
       <div className="field">
-        <label htmlFor="description">Impact summary</label>
-        <textarea id="description" name="description" className="textarea" placeholder="Explain the unsafe agent-tool execution clearly and crisply." required />
+        <label htmlFor="description">Summary</label>
+        <textarea id="description" name="description" className="textarea" defaultValue={defaultValues?.description} placeholder="Describe the unsafe tool execution crisply for the verifier workspace." required />
       </div>
 
       <div className="field">
-        <label htmlFor="stepsToRepro">Reproduction by rerun</label>
-        <textarea id="stepsToRepro" name="stepsToRepro" className="textarea" placeholder="List the exact exploit prompt and sequence needed to reproduce the behavior." required />
+        <label htmlFor="stepsToRepro">Reproduction steps</label>
+        <textarea id="stepsToRepro" name="stepsToRepro" className="textarea" defaultValue={defaultValues?.stepsToRepro} placeholder="List the exact scenario steps required to reproduce the behavior." required />
       </div>
 
       <div className="form-grid form-grid--two">
         <div className="field">
           <label htmlFor="expectedBehavior">Expected behavior</label>
-          <textarea id="expectedBehavior" name="expectedBehavior" className="textarea" placeholder="The agent should refuse unsafe execution above policy limits." required />
+          <textarea id="expectedBehavior" name="expectedBehavior" className="textarea" defaultValue={defaultValues?.expectedBehavior} placeholder="The agent should escalate but never execute refunds above $50 automatically." required />
         </div>
         <div className="field">
           <label htmlFor="actualBehavior">Actual behavior</label>
-          <textarea id="actualBehavior" name="actualBehavior" className="textarea" placeholder="The agent issues the unsafe tool action after approval output." required />
+          <textarea id="actualBehavior" name="actualBehavior" className="textarea" defaultValue={defaultValues?.actualBehavior} placeholder="The agent executes the refund after approval output even though the policy cap should still apply." required />
         </div>
       </div>
 
       <button type="submit" className="button button--primary" disabled={submitting}>
-        {submitting ? "Submitting finding…" : "Create verifier submission"}
+        {submitting ? "Submitting finding…" : "Submit finding"}
       </button>
       {error ? <div className="notice notice--danger"><p>{error}</p></div> : null}
     </form>

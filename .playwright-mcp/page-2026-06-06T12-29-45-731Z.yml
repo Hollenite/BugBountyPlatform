@@ -1,0 +1,47 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "FailBounty" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e9]: FailBounty
+        - navigation "Primary" [ref=e10]:
+          - link "Home" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+            - generic [ref=e15]: Home
+          - link "Programs" [ref=e16] [cursor=pointer]:
+            - /url: /programs
+            - img [ref=e17]
+            - generic [ref=e22]: Programs
+          - link "Test Lab" [ref=e23] [cursor=pointer]:
+            - /url: /lab/prog-refund-demo
+            - img [ref=e24]
+            - generic [ref=e26]: Test Lab
+          - link "Verifier Review" [ref=e27] [cursor=pointer]:
+            - /url: /submissions
+            - img [ref=e28]
+            - generic [ref=e32]: Verifier Review
+          - link "Account" [ref=e33] [cursor=pointer]:
+            - /url: /account
+            - img [ref=e34]
+            - generic [ref=e37]: Account
+        - link "Sign in" [ref=e38] [cursor=pointer]:
+          - /url: /sign-in
+          - img [ref=e39]
+          - text: Sign in
+    - main [ref=e43]:
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - heading "Sign in to FailBounty" [level=3] [ref=e46]
+          - paragraph [ref=e47]: Choose a seeded private-alpha role to try the workflow.
+        - generic [ref=e48]:
+          - button "Continue as Researcher" [ref=e49] [cursor=pointer]
+          - button "Continue as Verifier" [ref=e50] [cursor=pointer]
+          - button "Continue as Company" [ref=e51] [cursor=pointer]
+        - generic [ref=e52]:
+          - generic [ref=e53]: Manual email
+          - textbox "Manual email" [ref=e54]: researcher@demo.com
+        - button "Sign in" [ref=e55] [cursor=pointer]
+  - alert [ref=e56]

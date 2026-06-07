@@ -1,0 +1,137 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_DATABASE_URL")
+}
+
+model User {
+  id                   String    @id @default(uuid())
+  email                String    @unique
+  emailVerifiedAt      DateTime?
+  name                 String
+  role                 String
+  wallet               String?
+  walletVerifiedAt     DateTime?
+  walletNonce          String?
+  walletNonceExpiresAt DateTime?
+  createdAt            DateTime  @default(now())
+  updatedAt            DateTime  @default(now()) @updatedAt
+
+  programs    Program[]
+  submissions Submission[]
+  sessions    AgentSession[]
+  appSessions AppSession[]
+}
+
+model AppSession {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tokenHash String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+model Program {
+  id                String   @id
+  companyId         String
+  company           User     @relation(fields: [companyId], references: [id])
+  name              String
+  agentId           String
+  description       String
+  scope             String
+  targetTemplateId  String   @default("refund-agent")
+  visibility        String   @default("private")
+  scopeConfig       String?
+  policyConfig      String?
+  rewardConfig      String?
+  rewardCriticalWei String   @default("50000000000000000")
+  rewardHighWei     String   @default("20000000000000000")
+  rewardMediumWei   String   @default("10000000000000000")
+  rewardLowWei      String   @default("5000000000000000")
+  active            Boolean  @default(true)
+  chainProgramIndex Int?
+  escrowTx          String?
+  poolBalanceWei    String   @default("0")
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @default(now()) @updatedAt
+
+  submissions Submission[]
+  sessions    AgentSession[]
+
+  @@index([companyId])
+  @@index([targetTemplateId])
+  @@index([visibility, active])
+}
+
+model AgentSession {
+  id                  String   @id @default(uuid())
+  programId           String
+  program             Program  @relation(fields: [programId], references: [id])
+  actorId             String
+  actor               User     @relation(fields: [actorId], references: [id])
+  agentId             String
+  sessionType         String   @default("researcher")
+  status              String   @default("active")
+  modelId             String?
+  modelParams         String?
+  systemPromptHash    String?
+  toolConfigHash      String?
+  environmentSnapshot String?
+  createdAt           DateTime @default(now())
+  closedAt            DateTime?
+
+  events     TraceEvent[]
+  submission Submission?
+}
+
+model TraceEvent {
+  id        String       @id @default(uuid())
+  sessionId String
+  session   AgentSession @relation(fields: [sessionId], references: [id])
+  index     Int
+  type      String
+  toolName  String?
+  payload   String
+  flagged   Boolean      @default(false)
+  createdAt DateTime     @default(now())
+
+  @@unique([sessionId, index])
+}
+
+model Submission {
+  id               String       @id @default(uuid())
+  programId        String
+  program          Program      @relation(fields: [programId], references: [id])
+  researcherId     String
+  researcher       User         @relation(fields: [researcherId], references: [id])
+  sessionId        String       @unique
+  session          AgentSession @relation(fields: [sessionId], references: [id])
+  title            String
+  description      String
+  stepsToRepro     String
+  expectedBehavior String
+  actualBehavior   String
+  severity         String?
+  status           String       @default("pending")
+  replayResult     String?
+  replaySessionId  String?
+  replayDetail     String?
+  replayComparison String?
+  verifierNote     String?
+  payoutWei        String?
+  evidenceHash     String?
+  reportHash       String?
+  chainFindingId   Int?
+  submitFindingTx  String?
+  payoutTx         String?
+  researcherWallet String?
+  createdAt        DateTime     @default(now())
+  resolvedAt       DateTime?
+}

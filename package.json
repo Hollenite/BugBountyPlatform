@@ -7,9 +7,13 @@
     "build": "next build",
     "start": "next start",
     "start:demo": "bash ./scripts/start-demo.sh",
+    "test": "tsx --test tests/**/*.test.ts",
     "lint": "next lint",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
+    "prisma:migrate:dev": "prisma migrate dev",
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:validate:postgres": "prisma validate --schema prisma/schema.postgres.prisma",
     "db:seed": "tsx prisma/seed.ts"
   },
   "dependencies": {

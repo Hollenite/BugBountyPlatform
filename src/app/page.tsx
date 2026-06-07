@@ -1,98 +1,93 @@
-import { ArrowRight, ShieldCheck, Sparkles, Wrench } from "lucide-react"
-import { MetricCard, PageHeader, PrimaryLink, SecondaryLink, SurfaceCard } from "@/components/ui"
+import { Building2, ClipboardCheck, FlaskConical, SearchCheck } from "lucide-react"
+import { PrimaryLink, SecondaryLink, SurfaceCard } from "@/components/ui"
+
+const roles = [
+  {
+    title: "Researcher",
+    description: "Run a test and submit evidence.",
+    icon: FlaskConical,
+  },
+  {
+    title: "Verifier",
+    description: "Rerun the scenario and approve only exact matches.",
+    icon: SearchCheck,
+  },
+  {
+    title: "Company",
+    description: "Create hosted sandbox programs.",
+    icon: Building2,
+  },
+]
+
+const steps = [
+  "Company creates a hosted sandbox.",
+  "Researcher runs a test.",
+  "Evidence timeline captures unsafe tool execution.",
+  "Verifier reruns and approves or rejects.",
+]
 
 export default function HomePage() {
   return (
     <main className="page-shell">
-      <SurfaceCard className="hero">
+      <section className="hero">
         <div className="hero-grid">
           <div className="hero-copy">
-            <p className="page-header__eyebrow">Hackathon demo · replayable evidence</p>
-            <h1>Capture unsafe agent-tool execution. Prove it. Reproduce it.</h1>
+            <p className="page-header__eyebrow">Private alpha demo</p>
+            <h1>Test AI agents before unsafe tool actions reach production.</h1>
             <p>
-              FailBounty turns fragile AI-agent failures into a structured verification flow: capture the exploit, preserve the trace,
-              rerun reproduction-by-rerun, and hand a verifier proof artifacts they can trust.
+              FailBounty helps teams run hosted security test sessions, capture evidence, and let verifiers approve only findings that can be rerun.
             </p>
             <div className="hero-cta">
-              <PrimaryLink href="/board">Start from the bounty board</PrimaryLink>
-              <SecondaryLink href="/verifier">Watch the verifier flow</SecondaryLink>
+              <PrimaryLink href="/sign-in">Sign in</PrimaryLink>
+              <SecondaryLink href="/programs/prog-refund-demo">View demo program</SecondaryLink>
             </div>
           </div>
 
-          <div className="stack">
-            <MetricCard label="Primary proof" value="Replayable traces" hint="Capture event-by-event evidence before verifier review." />
-            <MetricCard label="Approval gate" value="Exact replay required" hint="Only reproduced_exact findings can be approved." />
-            <MetricCard label="Output artifact" value="Report hash" hint="Structured proof lives beyond the raw demo screen." />
-          </div>
+          <SurfaceCard>
+            <div className="stack" style={{ gap: 18 }}>
+              <div className="inline-pills">
+                <span className="badge badge--accent"><ClipboardCheck size={14} /> Guided workflow</span>
+              </div>
+              <h2>One demo loop, three clear roles</h2>
+              <p className="muted" style={{ margin: 0, lineHeight: 1.7 }}>
+                The app walks from program setup to test run, evidence timeline, verifier rerun, and proof hash without making blockchain or payout mechanics the center of the product.
+              </p>
+              <div className="kv-list">
+                <div className="kv-row"><span className="kv-row__label">Primary evidence</span><span className="kv-row__value">Evidence timeline</span></div>
+                <div className="kv-row"><span className="kv-row__label">Approval gate</span><span className="kv-row__value">Exact rerun match</span></div>
+                <div className="kv-row"><span className="kv-row__label">Proof artifact</span><span className="kv-row__value">Evidence and report hashes</span></div>
+              </div>
+            </div>
+          </SurfaceCard>
         </div>
-      </SurfaceCard>
-
-      <section className="hero-proof-strip">
-        <MetricCard label="1 · Capture" value="Unsafe execution" hint="Prompt an agent into an unsafe tool path." />
-        <MetricCard label="2 · Inspect" value="Trace + policy checks" hint="Preserve the event stream and risk signals." />
-        <MetricCard label="3 · Verify" value="Reproduction-by-rerun" hint="Re-run and compare the unsafe action precisely." />
-        <MetricCard label="4 · Record proof" value="Evidence + report hash" hint="Close the loop with verifiable artifacts." />
       </section>
 
-      <PageHeader
-        eyebrow="Two demo paths"
-        title="Run the same product from both sides of trust"
-        description="Start as the researcher proving unsafe execution, or step straight into the verifier queue to inspect reproduction and approval gating."
-      />
-
-      <section className="card-grid">
-        <SurfaceCard>
-          <div className="stack" style={{ gap: 16 }}>
-            <div className="inline-pills">
-              <span className="badge badge--accent"><Sparkles size={14} /> Researcher flow</span>
+      <section className="role-grid" aria-label="Role paths">
+        {roles.map(({ title, description, icon: Icon }) => (
+          <SurfaceCard key={title}>
+            <div className="stack" style={{ gap: 12 }}>
+              <span className="badge badge--accent"><Icon size={14} /> {title}</span>
+              <h2>{description}</h2>
             </div>
-            <h2>Find the exploit. Preserve the evidence. Escalate the finding.</h2>
-            <p className="muted" style={{ margin: 0 }}>
-              Move from bounty selection into a guided exploit run, inspect the replayable trace, and create a verifier-ready submission with clean reproduction steps.
-            </p>
-            <PrimaryLink href="/board">Open bounty board</PrimaryLink>
-          </div>
-        </SurfaceCard>
-
-        <SurfaceCard>
-          <div className="stack" style={{ gap: 16 }}>
-            <div className="inline-pills">
-              <span className="badge badge--warning"><ShieldCheck size={14} /> Verifier flow</span>
-            </div>
-            <h2>Replay the evidence. Gate approval. Generate proof.</h2>
-            <p className="muted" style={{ margin: 0 }}>
-              Review the captured submission, compare replay outcomes, inspect the unsafe tool execution, and approve only when the rerun matches exactly.
-            </p>
-            <PrimaryLink href="/verifier">Open verifier queue</PrimaryLink>
-          </div>
-        </SurfaceCard>
+          </SurfaceCard>
+        ))}
       </section>
 
-      <section className="metrics-row">
-        <SurfaceCard>
-          <div className="stack" style={{ gap: 12 }}>
-            <span className="badge"><Wrench size={14} /> Unsafe execution focus</span>
-            <p className="muted" style={{ margin: 0 }}>
-              The product centers on unsafe agent-tool execution, not generic prompt injection theater.
-            </p>
-          </div>
-        </SurfaceCard>
-        <SurfaceCard>
-          <div className="stack" style={{ gap: 12 }}>
-            <span className="badge"><ShieldCheck size={14} /> Reproduction-by-rerun</span>
-            <p className="muted" style={{ margin: 0 }}>
-              Replay is framed as an operational rerun with explicit comparison checks, not perfect determinism claims.
-            </p>
-          </div>
-        </SurfaceCard>
-        <SurfaceCard>
-          <div className="stack" style={{ gap: 12 }}>
-            <span className="badge"><ArrowRight size={14} /> Optional chain anchoring</span>
-            <p className="muted" style={{ margin: 0 }}>
-              Off-chain proof and verifier trust stay primary; optional testnet anchoring remains secondary.
-            </p>
-          </div>
-        </SurfaceCard>
+      <section className="page-shell" aria-labelledby="how-it-works">
+        <div>
+          <p className="page-header__eyebrow">How it works</p>
+          <h2 id="how-it-works" style={{ margin: "6px 0 0", fontSize: "2rem" }}>From sandbox to verifier review</h2>
+        </div>
+        <div className="steps-grid">
+          {steps.map((step, index) => (
+            <SurfaceCard key={step}>
+              <div className="stack" style={{ gap: 10 }}>
+                <span className="badge">{index + 1}</span>
+                <p style={{ margin: 0, lineHeight: 1.6 }}>{step}</p>
+              </div>
+            </SurfaceCard>
+          ))}
+        </div>
       </section>
     </main>
   )
