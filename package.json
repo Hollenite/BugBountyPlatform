@@ -14,7 +14,10 @@
     "prisma:migrate:dev": "prisma migrate dev",
     "prisma:migrate:deploy": "prisma migrate deploy",
     "prisma:validate:postgres": "prisma validate --schema prisma/schema.postgres.prisma",
-    "db:seed": "tsx prisma/seed.ts"
+    "db:seed": "tsx prisma/seed.ts",
+    "chain:setup-program": "tsx scripts/setup-monad-program.ts",
+    "contracts:build": "cd contracts && $HOME/.foundry/bin/forge build",
+    "contracts:test": "cd contracts && $HOME/.foundry/bin/forge test -vvv"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.58.0",

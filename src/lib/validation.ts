@@ -48,8 +48,6 @@ export const CreateProgramSchema = z.object({
 })
 
 export const ChainRecordSchema = z.object({
-  chainFindingId: z.number().int().nonnegative(),
   submitFindingTx: z.string().min(10),
   payoutTx: z.string().min(10).optional(),
-  verifierId: uuid,
 })
