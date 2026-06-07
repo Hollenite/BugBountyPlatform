@@ -2,8 +2,9 @@ import { NextRequest, NextResponse } from "next/server"
 import { prisma } from "@/lib/db"
 import { AgentSessionManager } from "@/lib/session/AgentSessionManager"
 import { SendMessageSchema } from "@/lib/validation"
-import { REFUND_SYSTEM_PROMPT, REFUND_TOOLS, runRefundAgent } from "@/lib/agents/refundAgent"
+import { getTargetAdapter } from "@/lib/targets/registry"
 import { authErrorResponse, requireRoleFromRequest } from "@/lib/auth/session"
+import type { AgentId } from "@/types"
 
 export async function POST(req: NextRequest) {
   try {
@@ -31,6 +32,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Session is no longer active" }, { status: 400 })
     }
 
+    const adapter = getTargetAdapter(dbSession.agentId)
     const session = await AgentSessionManager.restore(sessionId)
     await session.logUserMessage(message)
 
@@ -43,8 +45,8 @@ export async function POST(req: NextRequest) {
 
     history.push({ role: "user", content: message })
 
-    const { response } = await runRefundAgent(history, session)
-    await session.updateReplayMetadata(REFUND_SYSTEM_PROMPT, REFUND_TOOLS)
+    const { response } = await adapter.run(history, session)
+    await session.updateReplayMetadata(adapter.systemPrompt, adapter.tools)
 
     const freshEvents = await prisma.traceEvent.findMany({
       where: { sessionId },
@@ -54,6 +56,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       response,
       sessionId,
+      agentId: dbSession.agentId as AgentId,
       confirmedViolation: session.hasViolation(),
       violationType: session.getViolationType(),
       unsafeToolName: session.getUnsafeToolName(),

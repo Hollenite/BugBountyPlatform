@@ -1,5 +1,4 @@
-import { DEMO_ENVIRONMENT } from "@/lib/constants"
-import { REFUND_SYSTEM_PROMPT, REFUND_TOOLS, runRefundAgent } from "@/lib/agents/refundAgent"
+import { getTargetAdapter } from "@/lib/targets/registry"
 import { deterministicHash, sha256 } from "@/lib/utils/hash"
 import { ReplayBundle, ReplayComparison, ReplayStatus } from "@/types"
 import { AgentSessionManager } from "./AgentSessionManager"
@@ -11,18 +10,14 @@ export type ReplayResult = {
   detail: string
 }
 
-function normalizeToolInput(input?: Record<string, unknown>) {
-  return {
-    order_id: typeof input?.order_id === "string" ? input.order_id.toUpperCase() : null,
-    amount_usd: Number(input?.amount_usd),
-  }
-}
-
 export async function replaySession(
   originalBundle: ReplayBundle,
   programId: string,
   verifierId: string,
 ): Promise<ReplayResult> {
+  const adapter = getTargetAdapter(originalBundle.agentId)
+  const environmentSnapshot = adapter.getEnvironmentSnapshot()
+
   const replaySession = await AgentSessionManager.create(
     programId,
     verifierId,
@@ -30,31 +25,32 @@ export async function replaySession(
     "verifier_replay",
   )
 
-  const currentSystemPromptHash = sha256(REFUND_SYSTEM_PROMPT)
-  const currentToolConfigHash = deterministicHash(REFUND_TOOLS)
-  const currentEnvHash = deterministicHash(DEMO_ENVIRONMENT)
+  const currentSystemPromptHash = sha256(adapter.systemPrompt)
+  const currentToolConfigHash = deterministicHash(adapter.tools)
+  const currentEnvHash = deterministicHash(environmentSnapshot)
   const originalEnvHash = deterministicHash(originalBundle.environmentSnapshot)
 
   const history: { role: "user" | "assistant"; content: string }[] = []
   for (const userMessage of originalBundle.userMessages) {
     await replaySession.logUserMessage(userMessage)
     history.push({ role: "user", content: userMessage })
-    const { response } = await runRefundAgent(history, replaySession)
+    const { response } = await adapter.run(history, replaySession)
     history.push({ role: "assistant", content: response })
   }
 
-  await replaySession.updateReplayMetadata(REFUND_SYSTEM_PROMPT, REFUND_TOOLS)
+  await replaySession.updateReplayMetadata(adapter.systemPrompt, adapter.tools)
   const newBundle = await AgentSessionManager.buildReplayBundle(replaySession.getSessionId())
 
-  const originalUnsafe = normalizeToolInput(originalBundle.confirmedUnsafeToolInput)
-  const replayUnsafe = normalizeToolInput(newBundle.confirmedUnsafeToolInput)
+  const originalUnsafe = adapter.normalizeUnsafeToolInput(originalBundle.confirmedUnsafeToolInput)
+  const replayUnsafe = adapter.normalizeUnsafeToolInput(newBundle.confirmedUnsafeToolInput)
 
   const comparison: ReplayComparison = {
     violationTypeMatch: newBundle.violationType === originalBundle.violationType,
     unsafeToolNameMatch: newBundle.confirmedUnsafeToolName === originalBundle.confirmedUnsafeToolName,
-    unsafeToolInputMatch:
-      originalUnsafe.order_id === replayUnsafe.order_id &&
-      originalUnsafe.amount_usd === replayUnsafe.amount_usd,
+    unsafeToolInputMatch: adapter.unsafeToolInputsMatch(
+      originalBundle.confirmedUnsafeToolInput,
+      newBundle.confirmedUnsafeToolInput,
+    ),
     systemPromptHashMatch: currentSystemPromptHash === originalBundle.systemPromptHash,
     toolConfigHashMatch: currentToolConfigHash === originalBundle.toolConfigHash,
     environmentHashMatch: currentEnvHash === originalEnvHash,
@@ -77,19 +73,25 @@ export async function replaySession(
       ? "reproduced_exact"
       : "reproduced_with_mismatch"
 
+  const formatted = adapter.formatReplayComparison(
+    originalUnsafe,
+    replayUnsafe,
+    originalBundle.violationType,
+    newBundle.violationType,
+  )
+
   return {
     replayStatus,
     comparison,
     newSessionId: replaySession.getSessionId(),
-    detail: buildDetailString(replayStatus, comparison, originalUnsafe, replayUnsafe, originalBundle.violationType, newBundle.violationType),
+    detail: buildDetailString(replayStatus, comparison, formatted, originalBundle.violationType, newBundle.violationType),
   }
 }
 
 function buildDetailString(
   status: ReplayStatus,
   comparison: ReplayComparison,
-  originalUnsafe: { order_id: string | null; amount_usd: number },
-  replayUnsafe: { order_id: string | null; amount_usd: number },
+  formatted: { unsafeToolLabel: string; inputLine: string; notReproducedLine: string },
   originalViolationType: string | undefined,
   replayViolationType: string | undefined,
 ): string {
@@ -99,8 +101,8 @@ function buildDetailString(
     return [
       "REPRODUCED EXACT",
       `${icon(comparison.violationTypeMatch)} Violation type: ${replayViolationType}`,
-      `${icon(comparison.unsafeToolNameMatch)} Unsafe tool: issue_refund`,
-      `${icon(comparison.unsafeToolInputMatch)} Original: ${originalUnsafe.order_id} $${originalUnsafe.amount_usd} | Replay: ${replayUnsafe.order_id} $${replayUnsafe.amount_usd}`,
+      `${icon(comparison.unsafeToolNameMatch)} Unsafe tool: ${formatted.unsafeToolLabel}`,
+      `${icon(comparison.unsafeToolInputMatch)} ${formatted.inputLine}`,
       `${icon(comparison.systemPromptHashMatch)} System prompt hash match`,
       `${icon(comparison.toolConfigHashMatch)} Tool config hash match`,
       `${icon(comparison.environmentHashMatch)} Environment hash match`,
@@ -112,7 +114,7 @@ function buildDetailString(
       "REPRODUCED (WITH ENVIRONMENT MISMATCH — approval blocked)",
       `${icon(comparison.violationTypeMatch)} Violation type: ${replayViolationType}`,
       `${icon(comparison.unsafeToolNameMatch)} Unsafe tool match`,
-      `${icon(comparison.unsafeToolInputMatch)} Order+amount: orig=${originalUnsafe.order_id} $${originalUnsafe.amount_usd} | replay=${replayUnsafe.order_id} $${replayUnsafe.amount_usd}`,
+      `${icon(comparison.unsafeToolInputMatch)} ${formatted.inputLine}`,
       `${icon(comparison.systemPromptHashMatch)} System prompt hash match: ${comparison.systemPromptHashMatch}`,
       `${icon(comparison.toolConfigHashMatch)} Tool config hash match: ${comparison.toolConfigHashMatch}`,
       `${icon(comparison.environmentHashMatch)} Environment hash match: ${comparison.environmentHashMatch}`,
@@ -121,8 +123,7 @@ function buildDetailString(
 
   return [
     "NOT REPRODUCED",
-    `Original type: ${originalViolationType ?? "none"} | Replay type: ${replayViolationType ?? "none"}`,
-    `Original unsafe input: ${originalUnsafe.order_id} $${originalUnsafe.amount_usd} | Replay: ${replayUnsafe.order_id} $${replayUnsafe.amount_usd}`,
+    formatted.notReproducedLine,
     `Prompt hash match: ${comparison.systemPromptHashMatch}`,
     `Tool config hash match: ${comparison.toolConfigHashMatch}`,
   ].join("\n")

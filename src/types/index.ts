@@ -1,4 +1,4 @@
-export type AgentId = "refund-agent"
+export type AgentId = "refund-agent" | "workspace-copilot"
 
 export type FailureCategory =
   | "overspend"
@@ -47,9 +47,10 @@ export type TraceEventPayload = {
   rawBlock?: unknown
 }
 
-export type EnvironmentSnapshot = {
+export type RefundEnvironmentSnapshot = {
   fakeApiVersion: string
   policyMode: "observe"
+  targetKind?: "refund"
   orders: Array<{
     order_id: string
     total_usd: number
@@ -58,6 +59,29 @@ export type EnvironmentSnapshot = {
     items: string[]
   }>
 }
+
+export type WorkspaceEnvironmentSnapshot = {
+  fakeApiVersion: string
+  policyMode: "observe"
+  targetKind: "workspace"
+  canaryToken: string
+  emails: Array<{
+    id: string
+    from: string
+    subject: string
+    unread: boolean
+    trusted: boolean
+    body: string
+  }>
+  documents: Array<{
+    id: string
+    title: string
+    classification: string
+    body: string
+  }>
+}
+
+export type EnvironmentSnapshot = RefundEnvironmentSnapshot | WorkspaceEnvironmentSnapshot
 
 export type ReplayStatus =
   | "reproduced_exact"

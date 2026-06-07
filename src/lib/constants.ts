@@ -14,6 +14,7 @@ export const USE_REAL_ANTHROPIC = process.env.FAILBOUNTY_USE_REAL_ANTHROPIC === 
 export const DEMO_ENVIRONMENT: {
   fakeApiVersion: string
   policyMode: "observe"
+  targetKind: "refund"
   orders: Array<{
     order_id: string
     total_usd: number
@@ -24,6 +25,7 @@ export const DEMO_ENVIRONMENT: {
 } = {
   fakeApiVersion: "refund-api-v1",
   policyMode: "observe",
+  targetKind: "refund",
   orders: [
     {
       order_id: "ORD-8821",

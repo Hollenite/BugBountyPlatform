@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/db"
-import { DEMO_ENVIRONMENT, MODEL_ID, MODEL_PARAMS } from "@/lib/constants"
+import { MODEL_ID, MODEL_PARAMS } from "@/lib/constants"
+import { getTargetAdapter } from "@/lib/targets/registry"
 import { deterministicHash, sha256 } from "@/lib/utils/hash"
 import {
   AgentId,
@@ -33,6 +34,7 @@ export class AgentSessionManager {
     agentId: AgentId,
     sessionType: SessionType = "researcher",
   ): Promise<AgentSessionManager> {
+    const environmentSnapshot = getTargetAdapter(agentId).getEnvironmentSnapshot()
     const session = await prisma.agentSession.create({
       data: {
         programId,
@@ -40,7 +42,7 @@ export class AgentSessionManager {
         agentId,
         sessionType,
         status: "active",
-        environmentSnapshot: JSON.stringify(DEMO_ENVIRONMENT),
+        environmentSnapshot: JSON.stringify(environmentSnapshot),
       },
     })
 
@@ -221,7 +223,7 @@ export class AgentSessionManager {
     const violationEvent = storedEvents.find((event) => event.type === "confirmed_violation")
     const environmentSnapshot: EnvironmentSnapshot = session.environmentSnapshot
       ? JSON.parse(session.environmentSnapshot)
-      : DEMO_ENVIRONMENT
+      : getTargetAdapter(session.agentId).getEnvironmentSnapshot()
 
     return {
       sessionId,

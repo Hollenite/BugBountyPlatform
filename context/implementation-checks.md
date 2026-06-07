@@ -1,7 +1,7 @@
 # Implementation Checks
 
 ## Current Goal
-- Completed lab redesign and final verification.
+- EchoLeak-inspired Northstar Workspace Copilot target integration.
 
 ## Done
 - Created `context/` and moved both planning docs into it.
@@ -33,10 +33,19 @@
   - auth and invalid-input adversarial probes rejected correctly
 
 ## In Progress
-- None.
+- Target-aware lab UI, evidence summary, submission defaults, verifier comparison cards.
+
+## Done (workspace integration — backend)
+- Added target adapter registry (`refund-agent`, `workspace-copilot`).
+- Added workspace environment, deterministic copilot agent, canary route.
+- Session message + replay dispatch by `agentId`; target-specific violation comparison.
+- Seeded `prog-workspace-copilot` (Northstar Labs).
+- Core-loop test passes: `data_leak` → `reproduced_exact`.
 
 ## Blocked / Risks
 - None currently blocking the hackathon demo.
 
 ## Next
-- If desired: tighten some copy, add screenshots/demo script, or prepare a clean commit.
+- Target-aware lab UI (inbox/docs/canary panels, attack templates).
+- Workspace evidence summary + submission prefills + verifier comparison UI.
+- Regression check refund program end-to-end.
