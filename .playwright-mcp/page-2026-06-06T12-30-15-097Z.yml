@@ -1,0 +1,96 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "FailBounty" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e9]: FailBounty
+        - navigation "Primary" [ref=e10]:
+          - link "Home" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+            - generic [ref=e15]: Home
+          - link "Programs" [ref=e16] [cursor=pointer]:
+            - /url: /programs
+            - img [ref=e17]
+            - generic [ref=e22]: Programs
+          - link "Test Lab" [ref=e23] [cursor=pointer]:
+            - /url: /lab/prog-refund-demo
+            - img [ref=e24]
+            - generic [ref=e26]: Test Lab
+          - link "Verifier Review" [ref=e27] [cursor=pointer]:
+            - /url: /submissions
+            - img [ref=e28]
+            - generic [ref=e32]: Verifier Review
+          - link "Account" [ref=e33] [cursor=pointer]:
+            - /url: /account
+            - img [ref=e34]
+            - generic [ref=e37]: Account
+        - link "Sign in" [ref=e38] [cursor=pointer]:
+          - /url: /sign-in
+          - img [ref=e39]
+          - text: Sign in
+    - main [ref=e43]:
+      - generic [ref=e45]:
+        - generic [ref=e46]:
+          - paragraph [ref=e47]: Private alpha demo
+          - heading "Test AI agents before unsafe tool actions reach production." [level=1] [ref=e48]
+          - paragraph [ref=e49]: FailBounty helps teams run hosted security test sessions, capture evidence, and let verifiers approve only findings that can be rerun.
+          - generic [ref=e50]:
+            - link "Sign in" [ref=e51] [cursor=pointer]:
+              - /url: /sign-in
+              - text: Sign in
+              - img [ref=e52]
+            - link "View demo program" [ref=e54] [cursor=pointer]:
+              - /url: /programs/prog-refund-demo
+        - generic [ref=e56]:
+          - generic [ref=e58]:
+            - img [ref=e59]
+            - text: Guided workflow
+          - heading "One demo loop, three clear roles" [level=2] [ref=e63]
+          - paragraph [ref=e64]: The app walks from program setup to test run, evidence timeline, verifier rerun, and proof hash without making blockchain or payout mechanics the center of the product.
+          - generic [ref=e65]:
+            - generic [ref=e66]:
+              - generic [ref=e67]: Primary evidence
+              - generic [ref=e68]: Evidence timeline
+            - generic [ref=e69]:
+              - generic [ref=e70]: Approval gate
+              - generic [ref=e71]: Exact rerun match
+            - generic [ref=e72]:
+              - generic [ref=e73]: Proof artifact
+              - generic [ref=e74]: Evidence and report hashes
+      - region "Role paths" [ref=e75]:
+        - generic [ref=e77]:
+          - generic [ref=e78]:
+            - img [ref=e79]
+            - text: Researcher
+          - heading "Run a test and submit evidence." [level=2] [ref=e81]
+        - generic [ref=e83]:
+          - generic [ref=e84]:
+            - img [ref=e85]
+            - text: Verifier
+          - heading "Rerun the scenario and approve only exact matches." [level=2] [ref=e89]
+        - generic [ref=e91]:
+          - generic [ref=e92]:
+            - img [ref=e93]
+            - text: Company
+          - heading "Create hosted sandbox programs." [level=2] [ref=e97]
+      - region "From sandbox to verifier review" [ref=e98]:
+        - generic [ref=e99]:
+          - paragraph [ref=e100]: How it works
+          - heading "From sandbox to verifier review" [level=2] [ref=e101]
+        - generic [ref=e102]:
+          - generic [ref=e104]:
+            - generic [ref=e105]: "1"
+            - paragraph [ref=e106]: Company creates a hosted sandbox.
+          - generic [ref=e108]:
+            - generic [ref=e109]: "2"
+            - paragraph [ref=e110]: Researcher runs a test.
+          - generic [ref=e112]:
+            - generic [ref=e113]: "3"
+            - paragraph [ref=e114]: Evidence timeline captures unsafe tool execution.
+          - generic [ref=e116]:
+            - generic [ref=e117]: "4"
+            - paragraph [ref=e118]: Verifier reruns and approves or rejects.
+  - alert [ref=e119]

@@ -1,0 +1,36 @@
+[     130ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[     679ms] [LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[     692ms] [LOG] [Fast Refresh] done in 12ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[     844ms] [LOG] [Fast Refresh] done in 164ms @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:43
+[     972ms] [ERROR] Failed to fetch RSC payload for http://localhost:3001/submissions/cc0d065f-25d5-447c-bada-1c196ab76ccf. Falling back to browser navigation. TypeError: Failed to fetch
+    at fetchServerResponse (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/router-reducer/fetch-server-response.js:59:27)
+    at fastRefreshReducerImpl (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/router-reducer/reducers/fast-refresh-reducer.js:33:67)
+    at clientReducer (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/router-reducer/router-reducer.js:41:67)
+    at Object.action (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/router/action-queue.js:150:55)
+    at runAction (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/router/action-queue.js:56:38)
+    at dispatchAction (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/router/action-queue.js:113:9)
+    at Object.dispatch (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/shared/lib/router/action-queue.js:145:40)
+    at eval (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/use-reducer-with-devtools.js:130:21)
+    at eval (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/app-router.js:304:25)
+    at startTransition (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react/cjs/react.development.js:2597:25)
+    at Object.fastRefresh (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/app-router.js:303:48)
+    at processMessage (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:297:31)
+    at WebSocket.handler (webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:395:17) @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/app-index.js:32
+[     975ms] [ERROR] Failed to load resource: the server responded with a status of 500 (Internal Server Error) @ http://localhost:3001/sign-in:0
+[    1182ms] [INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold @ webpack-internal:///./node_modules/react-dom/cjs/react-dom.development.js:29889
+[    1209ms] TypeError: __webpack_modules__[moduleId] is not a function
+    at Object.__webpack_require__ [as require] (file:///home/intelligentape/Life/Archive/.next/server/webpack-runtime.js:33:42)
+    at require (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:39:20088)
+    at <unknown> (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108280)
+    at eo (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108465)
+    at <unknown> (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:110694)
+    at Object._fromJSON (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:111250)
+    at JSON.parse (<anonymous>)
+    at eu (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108959)
+    at en (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:108027)
+    at <unknown> (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115169)
+    at <unknown> (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115186)
+    at <unknown> (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115219)
+    at <unknown> (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115236)
+    at t (file:///home/intelligentape/Life/Archive/node_modules/next/dist/compiled/next-server/app-page.runtime.dev.js:35:115459)
+[    1208ms] [LOG] [HMR] connected @ webpack-internal:///./node_modules/next/dist/client/components/react-dev-overlay/pages/websocket.js:38

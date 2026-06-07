@@ -1,0 +1,64 @@
+- generic [active] [ref=e1]:
+  - generic [ref=e2]:
+    - banner [ref=e3]:
+      - generic [ref=e4]:
+        - link "FailBounty" [ref=e5] [cursor=pointer]:
+          - /url: /
+          - img [ref=e7]
+          - generic [ref=e9]: FailBounty
+        - navigation "Primary" [ref=e10]:
+          - link "Home" [ref=e11] [cursor=pointer]:
+            - /url: /
+            - img [ref=e12]
+            - generic [ref=e15]: Home
+          - link "Programs" [ref=e16] [cursor=pointer]:
+            - /url: /programs
+            - img [ref=e17]
+            - generic [ref=e22]: Programs
+          - link "Test Lab" [ref=e23] [cursor=pointer]:
+            - /url: /lab/prog-refund-demo
+            - img [ref=e24]
+            - generic [ref=e26]: Test Lab
+          - link "Verifier Review" [ref=e27] [cursor=pointer]:
+            - /url: /submissions
+            - img [ref=e28]
+            - generic [ref=e32]: Verifier Review
+          - link "Account" [ref=e33] [cursor=pointer]:
+            - /url: /account
+            - img [ref=e34]
+            - generic [ref=e37]: Account
+        - link "Sign in" [ref=e38] [cursor=pointer]:
+          - /url: /sign-in
+          - img [ref=e39]
+          - text: Sign in
+    - main [ref=e43]:
+      - generic [ref=e44]:
+        - generic [ref=e45]:
+          - heading "Account" [level=1] [ref=e46]
+          - paragraph [ref=e47]: Your seeded private-alpha identity controls the demo actions available in each workflow.
+        - link "Back to programs" [ref=e49] [cursor=pointer]:
+          - /url: /programs
+      - generic [ref=e50]:
+        - generic [ref=e52]:
+          - generic [ref=e54]: company
+          - heading "Acme AI" [level=2] [ref=e55]
+          - generic [ref=e56]:
+            - generic [ref=e57]:
+              - generic [ref=e58]: Email
+              - generic [ref=e59]: acme@demo.com
+            - generic [ref=e60]:
+              - generic [ref=e61]: Role
+              - generic [ref=e62]: company
+            - generic [ref=e63]:
+              - generic [ref=e64]: Wallet status
+              - generic [ref=e65]: Not linked
+        - generic [ref=e67]:
+          - heading "Role permissions" [level=2] [ref=e68]
+          - paragraph [ref=e69]: Researchers can run test sessions and submit findings. Verifiers can rerun and approve or reject findings. Companies can create hosted programs.
+          - paragraph [ref=e71]: Wallet is optional and used only as proof or reward metadata.
+      - generic [ref=e73]:
+        - generic [ref=e74]:
+          - heading "Wallet is optional" [level=3] [ref=e75]
+          - paragraph [ref=e76]: Link MetaMask only if you want wallet metadata attached to proof and reward records. It is not used for sign-in.
+        - button "Link MetaMask" [ref=e77] [cursor=pointer]
+  - alert [ref=e78]
